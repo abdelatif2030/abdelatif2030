@@ -18,11 +18,11 @@ I specialize in reducing manual operations, improving deployment speed, and buil
 
 
 
-\- Hands-on experience with \*\*Huawei Cloud Stack (HCS)\*\* in multi-tenant enterprise environments  
+\- Hands-on experience with \*\*Huawei Cloud Stack (HCS)\*\* in multi-tenant enterprise environments
 
-\- Strong background in \*\*AWS cloud-native architecture (EC2, ECS, EKS, ECR)\*\*  
+\- Strong background in \*\*AWS cloud-native architecture (EC2, ECS, EKS, ECR)\*\*
 
-\- Passionate about \*\*Infrastructure as Code, CI/CD automation, and cloud observability\*\*  
+\- Passionate about \*\*Infrastructure as Code, CI/CD automation, and cloud observability\*\*
 
 \- Focused on building \*\*secure, scalable, and maintainable systems\*\*
 
@@ -124,29 +124,17 @@ Linux Administration | Bash Scripting | VPC | IAM | Load Balancing
 
 
 
-✔ Scalable cloud infrastructure  
+✔ Scalable cloud infrastructure
 
-✔ Fully automated CI/CD pipelines  
+✔ Fully automated CI/CD pipelines
 
-✔ Kubernetes-based deployments  
+✔ Kubernetes-based deployments
 
-✔ Infrastructure provisioning with Terraform  
+✔ Infrastructure provisioning with Terraform
 
-✔ Monitoring dashboards with Grafana \& Prometheus  
+✔ Monitoring dashboards with Grafana \& Prometheus
 
-✔ Secure Linux server environments  
-
-
-
-\---
-
-
-
-\## 📈 GitHub Stats
-
-
-
-!\[GitHub Stats](https://github-readme-stats.vercel.app/api?username=abdelatif2030\&show\_icons=true\&theme=default)
+✔ Secure Linux server environments
 
 
 
@@ -158,11 +146,11 @@ Linux Administration | Bash Scripting | VPC | IAM | Load Balancing
 
 
 
-\- 💼 LinkedIn: \[LinkedIn Profile](https://www.linkedin.com/in/abdo-mohamed-94b3433a4/?utm\_source=chatgpt.com)  
+\- 💼 LinkedIn: \[LinkedIn Profile](https://www.linkedin.com/in/abdo-mohamed-94b3433a4/?utm\_source=chatgpt.com)
 
-\- 🧑‍💻 Upwork: \[Upwork Profile](https://www.upwork.com/freelancers/\~01776e1536dd083cdd?utm\_source=chatgpt.com)  
+\- 🧑‍💻 Upwork: \[Upwork Profile](https://www.upwork.com/freelancers/\~01776e1536dd083cdd?mp\_source=share)
 
-\- 🎯 Fiverr: \[Fiverr Profile](https://www.fiverr.com/sellers/abdelatif2030/edit?utm\_source=chatgpt.com)  
+\- 🎯 Fiverr: \[Fiverr Profile](https://www.fiverr.com/sellers/abdelatif2030/edit?utm\_source=chatgpt.com)
 
 
 
