@@ -148,7 +148,7 @@ Linux Administration | Bash Scripting | VPC | IAM | Load Balancing
 
 \- 💼 LinkedIn: \[LinkedIn Profile](https://www.linkedin.com/in/abdo-mohamed-94b3433a4/?utm\_source=chatgpt.com)
 
-\- 🧑‍💻 Upwork: \[Upwork Profile](https://www.upwork.com/freelancers/\~01776e1536dd083cdd/
+\- 🧑‍💻 Upwork: \[Upwork Profile](https://www.upwork.com/freelancers/~01776e1536dd083cdd/
 
 \- 🎯 Fiverr: \[Fiverr Profile](https://www.fiverr.com/sellers/abdelatif2030/edit?utm\_source=chatgpt.com)
 
