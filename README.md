@@ -1,44 +1,186 @@
-👨‍💻 DevOps / Cloud Engineer
+\# 👨‍💻 DevOps Engineer | Cloud \& Infrastructure Automation
 
 
 
-Cloud \& DevOps Engineer specializing in AWS, Kubernetes, Terraform, CI/CD automation, and Linux infrastructure.
+Cloud \& DevOps Engineer focused on designing, deploying, and automating scalable, secure, and production-ready cloud infrastructure across AWS and enterprise environments.
 
 
 
-🧠 Core Skills
+I specialize in reducing manual operations, improving deployment speed, and building reliable systems that scale efficiently.
 
-☁️ AWS / Azure
 
-🐳 Docker, Kubernetes
 
-⚙️ Terraform / Ansible
+\---
 
-🔁 CI/CD (Jenkins, GitHub Actions)
 
-📊 Monitoring (Prometheus, Grafana, ELK)
 
-🐧 Linux \& Networking
+\## 🚀 About Me
 
-🚀 Featured Projects (IMPORTANT)
 
-🔹 Kubernetes GitOps Platform
 
-ArgoCD + Kubernetes + microservices
+\- Hands-on experience with \*\*Huawei Cloud Stack (HCS)\*\* in multi-tenant enterprise environments  
 
-CI/CD with GitHub Actions
+\- Strong background in \*\*AWS cloud-native architecture (EC2, ECS, EKS, ECR)\*\*  
 
-Monitoring with Prometheus \& Grafana
+\- Passionate about \*\*Infrastructure as Code, CI/CD automation, and cloud observability\*\*  
 
-🔹 AWS Infrastructure Automation
+\- Focused on building \*\*secure, scalable, and maintainable systems\*\*
 
-Terraform-based cloud provisioning
 
-Ansible configuration management
 
-🔹 CI/CD Pipeline Project
+\---
 
-Jenkins pipeline for automated deployment
 
-Dockerized application workflow
+
+\## 🛠️ Tech Stack
+
+
+
+\### ☁️ Cloud Platforms
+
+AWS | Huawei Cloud Stack (HCS) | Azure
+
+
+
+\### 🐳 Containers \& Orchestration
+
+Docker | Kubernetes (EKS, ECS, Minikube)
+
+
+
+\### ⚙️ CI/CD \& Automation
+
+Jenkins | GitHub Actions | GitLab CI | ArgoCD
+
+
+
+\### 📦 Infrastructure as Code
+
+Terraform | Ansible | CloudFormation
+
+
+
+\### 📊 Monitoring \& Observability
+
+Prometheus | Grafana | ELK Stack
+
+
+
+\### 🐧 Systems \& Networking
+
+Linux Administration | Bash Scripting | VPC | IAM | Load Balancing
+
+
+
+\---
+
+
+
+\## 🚀 Key Skills
+
+
+
+\- Cloud Infrastructure Architecture (AWS \& Enterprise Cloud)
+
+\- CI/CD Pipeline Design \& Automation
+
+\- Kubernetes \& Container Orchestration
+
+\- Infrastructure as Code (Terraform / Ansible)
+
+\- Monitoring, Logging \& Observability
+
+\- Network Security \& Performance Optimization
+
+\- Linux System Administration \& Automation
+
+
+
+\---
+
+
+
+\## 🛡️ Security \& Reliability Focus
+
+
+
+\- SSH hardening \& secure remote access
+
+\- Firewall configuration (UFW, Security Groups)
+
+\- IAM role-based access control
+
+\- Logging, monitoring, and system health tracking
+
+\- Production-grade system stability design
+
+
+
+\---
+
+
+
+\## 📂 What I Build
+
+
+
+✔ Scalable cloud infrastructure  
+
+✔ Fully automated CI/CD pipelines  
+
+✔ Kubernetes-based deployments  
+
+✔ Infrastructure provisioning with Terraform  
+
+✔ Monitoring dashboards with Grafana \& Prometheus  
+
+✔ Secure Linux server environments  
+
+
+
+\---
+
+
+
+\## 📈 GitHub Stats
+
+
+
+!\[GitHub Stats](https://github-readme-stats.vercel.app/api?username=abdelatif2030\&show\_icons=true\&theme=default)
+
+
+
+\---
+
+
+
+\## 📬 Contact \& Links
+
+
+
+\- 💼 LinkedIn: \[LinkedIn Profile](https://www.linkedin.com/in/abdo-mohamed-94b3433a4/?utm\_source=chatgpt.com)  
+
+\- 🧑‍💻 Upwork: \[Upwork Profile](https://www.upwork.com/freelancers/\~01776e1536dd083cdd?utm\_source=chatgpt.com)  
+
+\- 🎯 Fiverr: \[Fiverr Profile](https://www.fiverr.com/sellers/abdelatif2030/edit?utm\_source=chatgpt.com)  
+
+
+
+\---
+
+
+
+\## 🎯 Goal
+
+
+
+To help businesses and teams build \*\*automated, scalable, and production-ready cloud systems\*\* with minimal operational overhead and maximum reliability.
+
+
+
+\---
+
+
+
+⭐ Always open to collaboration, DevOps opportunities, and freelance projects.
 
