@@ -61,17 +61,6 @@ I'm a Cloud & DevOps Engineer with hands-on production experience across **AWS**
 
 ---
 
-## Featured Projects
-
-### AWS Glue Sales Analytics ETL Pipeline
-> Production-grade data pipeline: S3 → Glue Crawler → PySpark ETL → Parquet → Athena
-
-Built a complete ETL pipeline using AWS Glue 4.0, automated end-to-end with PowerShell. Includes data quality checks with quarantine, Snappy-compressed Parquet output with Hive partitioning, job bookmarks for incremental loads, Glue Workflow orchestration, and Athena analytics — all within AWS Free Tier.
-
-**Stack:** AWS Glue · PySpark · S3 · Athena · CloudWatch · IAM · PowerShell
-
----
-
 ## Core Competencies
 
 ```
@@ -96,18 +85,6 @@ Security & Networking     █████████████████░
 | **IaC Provisioning** | Repeatable, version-controlled infrastructure with Terraform & Ansible |
 | **Observability** | Full-stack monitoring: metrics, logs, dashboards, and alerting |
 | **Security Hardening** | IAM least-privilege, SSH controls, Security Groups, audit logging |
-
----
-
-## GitHub Stats
-
-<div align="center">
-
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=YOUR_GITHUB_USERNAME&show_icons=true&theme=dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&icon_color=58a6ff&text_color=c9d1d9)
-
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=YOUR_GITHUB_USERNAME&layout=compact&theme=dark&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9)
-
-</div>
 
 ---
 
