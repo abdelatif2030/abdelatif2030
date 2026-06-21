@@ -85,15 +85,6 @@ Security & Networking     █████████████████░
 
 ---
 
-## Let's Work Together
-
-I'm open to **freelance projects**, **DevOps consulting**, and **full-time opportunities**.
-
-If you need reliable cloud infrastructure, automated pipelines, or a production-ready system built right the first time — let's talk.
-
-[![LinkedIn](https://img.shields.io/badge/Connect_on_LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/abdo-mohamed-94b3433a4/)
-[![Upwork](https://img.shields.io/badge/Hire_on_Upwork-6FDA44?style=for-the-badge&logo=upwork&logoColor=white)](https://www.upwork.com/freelancers/~01776e1536dd083cdd)
-[![Fiverr](https://img.shields.io/badge/Order_on_Fiverr-1DBF73?style=for-the-badge&logo=fiverr&logoColor=white)](https://www.fiverr.com/sellers/abdelatif2030)
 
 ---
 
