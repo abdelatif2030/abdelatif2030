@@ -12,7 +12,7 @@
 
 ## About Me
 
-I'm a Cloud & DevOps Engineer with hands-on production experience across **AWS**, **Huawei Cloud Stack (HCS)**, and enterprise environments. My work focuses on eliminating manual operations, accelerating deployments, and building infrastructure that scales reliably under real-world conditions.
+I'm a Cloud & DevOps Engineer with hands-on production experience across **AWS**, **Huawei Cloud Stack (HCS)**,GCP  and enterprise environments. My work focuses on eliminating manual operations, accelerating deployments, and building infrastructure that scales reliably under real-world conditions.
 
 - Currently working with **Huawei Cloud Stack (HCS)** in multi-tenant enterprise environments
 - Experienced in **AWS cloud-native architecture** — EC2, ECS, EKS, ECR, Glue, S3, Athena
@@ -27,6 +27,7 @@ I'm a Cloud & DevOps Engineer with hands-on production experience across **AWS**
 ![AWS](https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=amazonaws&logoColor=white)
 ![Huawei Cloud](https://img.shields.io/badge/Huawei_Cloud-FF0000?style=flat-square&logo=huawei&logoColor=white)
 ![Azure](https://img.shields.io/badge/Azure-0078D4?style=flat-square&logo=microsoftazure&logoColor=white)
+![Google Cloud](https://img.shields.io/badge/Google%20Cloud-4285F4?style=flat-square&logo=googlecloud&logoColor=white)
 
 ### Containers & Orchestration
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
