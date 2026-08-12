@@ -17,6 +17,7 @@ I'm a Cloud & DevOps Engineer with hands-on production experience across **AWS**
 - Currently working with **Huawei Cloud Stack (HCS)** in multi-tenant enterprise environments
 - Experienced in **AWS cloud-native architecture** — EC2, ECS, EKS, ECR, Glue, S3, Athena
 - Building production-grade systems with **Infrastructure as Code, CI/CD pipelines, and full observability stacks**
+- Google Cloud — GCE, GKE, Cloud Functions, BigQuery, Cloud Storage
 - Security-first mindset: IAM least-privilege, SSH hardening, firewall config, audit logging
 
 ---
