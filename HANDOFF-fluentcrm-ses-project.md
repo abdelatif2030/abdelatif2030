@@ -89,6 +89,19 @@ Existing records worth knowing: root DMARC is `p=reject` with a placeholder `rua
 - Other findings for the client (outside scope): 1 critical (autoloaded options about 874 KB), PHP 8.2.34 (8.3 recommended), 13 inactive plugins, about 10 pending plugin updates, outdated WooCommerce template overrides, opcode cache full, **13,099 WordPress users**, UpdraftPlus backups possibly not running on schedule.
 - **Security:** the Site Health "Info" tab includes a Jetpack blog token. Do not paste the Info tab into chats or notes; share only the Status tab. The client may want to reconnect Jetpack.
 
+### Cron investigation and recovery (2026-10-16, later the same day)
+- **Access:** SSH works through Cloudways > Server (Melanotan-Aus-Server) > Master Credentials > Launch SSH Terminal. App path: `/home/1605291.cloudwaysapps.com/psukegvwxg/public_html`. CLI PHP is 8.2.34 (same as the site). WP-CLI works (`wp ...`; a harmless "[FlyingPress get]: NOAUTH" line appears).
+- **Diagnostics run (all read-only unless noted):** no `DISABLE_WP_CRON`/`ALTERNATE_WP_CRON` in `wp-config.php`; `wp cron test` reported spawning works; `doing_cron` lock not set; 287 events with 123 overdue at that point; two harmless events (`wp_privacy_personal_data_cleanup_requests`, `recovery_mode_clean_expired_keys`) were run manually and rescheduled correctly. No PHP error log exists at `.../logs/` (only web access logs); the master user's crontab is empty (the Cloudways job is stored elsewhere).
+- **Result:** the Cloudways system cron started working during the session. The Sep 24 batch cleared, UpdraftPlus is mid-backup (`updraft_backup_resume` events), `updraft_backup_database` and `updraft_backup` are rescheduled, so backups resumed. Two `wp cron event run --due-now` attempts were started and cancelled with Ctrl+C before the safety checks; they may have run part of the backlog.
+- **Action Scheduler pending queue** (checked via `wp db query` on `actionscheduler_actions`): only housekeeping (WooCommerce, WPForms, Stripe cache), 2 `airwallex_check_pending_transactions`, 1 FluentCRM `every_minute_tasks`, and admin-only items (`wp_mail_smtp_summary_report_email`, WooCommerce tracker). Nothing customer-facing.
+- **Intentionally paused in WP Crontrol (do not resume without the client's say-so):**
+  - `ivole_send_reminder`: 205 queued CusRev review-request emails to customers. These were already paused before our work (the "Paused events (205)" count). About 45 are past due, so resuming would send them all at once.
+  - `wlr_expire_email`: WPLoyalty point-expiry emails (paused by us).
+  - `active_cron_to_check_order_and_send_email`: paused by us; it has no callback (defined in the inactive `enfold-child` theme's `functions.php`, Action shows "None"), so it sends nothing. `active_cron_to_find_order_where_paid_off_9d` and `sendEmail` were not confirmed paused; both ran once before the pauses.
+  - `sendEmail` belongs to **WooCommerce Advanced Reporting & Statistics Pro** (`OrderProcessorAdmin::sendEmail()`), a weekly report email, not a customer email.
+- **Open check:** re-run `wp cron event list --fields=hook,next_run_relative --format=csv 2>/dev/null | grep -v ivole | grep -c ",now"` (expect a handful) and confirm with the client that no customer received unexpected emails around 09:30 to 09:50 UTC on Oct 16.
+- **Cloudways cron job details:** Type PHP, command `wp-cron.php`, every 5 minutes. Consider changing to every minute once stable (FluentCRM and Action Scheduler use 1-minute schedules). `DISABLE_WP_CRON` is still not set; adding it is optional once the cron is proven.
+
 ### WordPress site (seen only on the dashboard)
 Plugins include WooCommerce, Jetpack, Site Kit, WPForms, Contact Form 7, Yoast, WebToffee Import/Export, Shipment Tracking, Product Bundles, FlyingPress (cache), UpdraftPlus (backup), custom "Melanotan Aus" theme plugins. About 10 plugin updates are pending (do not update as part of this job).
 
