@@ -2,7 +2,7 @@
 
 Client: Natasha Del Bianco (store: https://melanotan-aus.com, WooCommerce, hosted on Cloudways, DNS on Cloudflare)
 Contract: fixed $250. Setup, Drip migration, first sale send, rebuild of existing Drip flows. All accounts stay in the client's name.
-Last updated: 2026-10-16 (session notes, no passwords or keys stored here)
+Last updated: 2026-10-16, about 11:30 UTC (session notes, no passwords or keys stored here)
 
 > **Security:** the client pasted several passwords, a one-time login link, MFA codes and a FluentCRM license key in the chat. Do not store them in notes. At handover, tell her to change the AWS, Drip, WordPress and Cloudflare passwords, and remove your access.
 
@@ -101,6 +101,30 @@ Existing records worth knowing: root DMARC is `p=reject` with a placeholder `rua
   - `sendEmail` belongs to **WooCommerce Advanced Reporting & Statistics Pro** (`OrderProcessorAdmin::sendEmail()`), a weekly report email, not a customer email.
 - **Open check:** re-run `wp cron event list --fields=hook,next_run_relative --format=csv 2>/dev/null | grep -v ivole | grep -c ",now"` (expect a handful) and confirm with the client that no customer received unexpected emails around 09:30 to 09:50 UTC on Oct 16.
 - **Cloudways cron job details:** Type PHP, command `wp-cron.php`, every 5 minutes. Consider changing to every minute once stable (FluentCRM and Action Scheduler use 1-minute schedules). `DISABLE_WP_CRON` is still not set; adding it is optional once the cron is proven.
+
+### FINAL cron setup and result (2026-10-16, about 11:30 UTC) - supersedes the earlier cron notes above
+- **Root cause found:** the Basic-tab cron job never ran, and the Advanced crontab only had two environment lines. `wp-cron.php` run from cron started, exited 0 and processed nothing (the log only showed the Redis `[FlyingPress get]: NOAUTH Authentication required.` message). Running events through WP-CLI worked.
+- **Final Advanced crontab (Cloudways > app 6305766 > Cron Job Management > Advanced):**
+  ```
+  PATH=/var/cw/php_versions/8.2/bin:/usr/local/bin:/usr/bin:/bin
+  WP_CLI_PHP=/usr/bin/php8.2
+  */5 * * * * flock -n /home/1605291.cloudwaysapps.com/psukegvwxg/tmp/wp-cron2.lock -c "date -u; cd /home/1605291.cloudwaysapps.com/psukegvwxg/public_html && timeout 600 /usr/local/bin/wp cron event run --due-now" >> /home/1605291.cloudwaysapps.com/psukegvwxg/tmp/wp-cron.log 2>&1
+  ```
+  `flock` stops overlapping runs, `timeout 600` stops a hung event from jamming the queue (an earlier version without a timeout got stuck behind one hung process, PID 1118379, which only Cloudways can kill), and `date -u` stamps each run in `.../tmp/wp-cron.log`.
+- **Verified at 11:30 UTC:** runs logged at 11:20, 11:25 and 11:30 (`Success: Executed a total of 8 cron events.`); overdue events fell from 123 to 3 (only the 1-minute/5-minute hooks that are always due between ticks, plus `hippoo_bi_daily_aggregate`); no cron process left running; UpdraftPlus backup completed (no resume event pending; database backup next in about 15 h, files in about 2 d 15 h). Disk 42% used, load about 0.8, 16 GB RAM.
+- **Still optional:** change the job to every minute once FluentCRM sending starts (1-minute hooks only run once per 5-minute tick now); add `DISABLE_WP_CRON` to `wp-config.php` after a stable day (download a copy first); remove the log file when no longer needed.
+- **Corrections to earlier notes:**
+  - WP Crontrol "paused" hooks still run on schedule but as **no-ops** (their actions are removed; about 12 ms per run in the log). Recurring ones (`wlr_expire_email`, `wlr_change_expire_status`, `ph_live_tracking_status_action_cron`) keep rescheduling and do nothing. One-off paused events are **consumed and discarded** when they come due: about 47 overdue `ivole_send_reminder` (CusRev review requests) were discarded at about 11:05 UTC on Oct 16, and the remaining 158 will be discarded as their dates arrive (3 at 12:00 UTC on Oct 16). **The client needs to decide** whether those review requests should still be sent. Nothing customer-facing is believed to have been sent (each run took about 5 ms).
+  - FluentCRM: **no automations (funnels table empty), no queued emails.** The "published" rows are email-sequence emails inside two sequences marked "(DRAFT, do not start)" ("Welcome Series": 3 emails; "Abandoned Cart": 1 email). Their content has not been reviewed; if ever used it needs the same wording review as in section 0.
+  - Orders: HPOS is off; 2 orders were in "Pending payment" at 11:20 UTC.
+- **Follow-ups for the client / Cloudways:** the Redis NOAUTH message (object cache reports active but a FlyingPress call is unauthenticated); PID 1118379 may still need terminating if it reappears; the review-reminder decision above; the client should review why some scheduled backups had stalled since about Sep 24.
+
+### Email provider status (2026-10-16) - supersedes the SES notes in section 2
+- **Amazon SES production access was REJECTED** (reported by the user). The SES DNS records for `mail.melanotan-aus.com` were removed from Cloudflare.
+- **SendGrid** (trial, free until Dec 15) was set up instead: domain authentication verified for `em3399.mail.melanotan-aus.com`, link branding verified for `url3471.mail.melanotan-aus.com`; Cloudflare now has the matching CNAME/TXT records on `mail.`. The user reports FluentSMTP was switched on for about five minutes for a test and switched off again; WP Mail SMTP is still the active mailer; nothing was sent to customers.
+- A forwarded reply from "Isa Bell" (an AI sales assistant at Twilio) quoted Essentials 50k at $19.95/month and listed content rules: **no treatment, cure or therapeutic claims; no prescription-drug promotion; permission-based recipients only.** That reply is pricing guidance, not a compliance approval.
+- **The product and advertising issue in section 0 is unchanged and still blocks** the SES-style approval, the SendGrid warm-up/send plan, and deliverability tuning for the current content. The user says the client has a private authorisation document that was not shared here and could not be assessed. Even with valid authorisation, the emails still need rewriting without therapeutic/weight-loss/tanning claims and without promoting prescription drugs, and SendGrid's own rules would still apply. A written answer from SendGrid's compliance team (not the sales assistant) is the only thing the account can rely on.
+- DNS note: the Cloudflare zone export (25 records) confirmed the root SPF (`v=spf1 include:_spf.google.com ~all`), `google._domainkey`, the Google MX and the verification TXT records are intact. Root DMARC is still `p=reject` with a placeholder `rua=mailto:your-info@melanotan-aus.com` (change only the `rua=` part, if the client confirms a real mailbox).
 
 ### WordPress site (seen only on the dashboard)
 Plugins include WooCommerce, Jetpack, Site Kit, WPForms, Contact Form 7, Yoast, WebToffee Import/Export, Shipment Tracking, Product Bundles, FlyingPress (cache), UpdraftPlus (backup), custom "Melanotan Aus" theme plugins. About 10 plugin updates are pending (do not update as part of this job).
