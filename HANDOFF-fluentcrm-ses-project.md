@@ -2,7 +2,7 @@
 
 Client: Natasha Del Bianco (store: https://melanotan-aus.com, WooCommerce, hosted on Cloudways, DNS on Cloudflare)
 Contract: fixed $250. Setup, Drip migration, first sale send, rebuild of existing Drip flows. All accounts stay in the client's name.
-Last updated: 2026-10-10 (session notes, no passwords or keys stored here)
+Last updated: 2026-10-16 (session notes, no passwords or keys stored here)
 
 > **Security:** the client pasted several passwords, a one-time login link, MFA codes and a FluentCRM license key in the chat. Do not store them in notes. At handover, tell her to change the AWS, Drip, WordPress and Cloudflare passwords, and remove your access.
 
@@ -29,8 +29,8 @@ Draft message to the client is in section 8.
 | Drip | Working | Account id 3064708. Dashboard link: https://www.getdrip.com/3064708/dashboard |
 | AWS | Working | Account "M Aus" (832474135684), region **ap-southeast-2 (Sydney)**. Logged in as the account owner; the first link she sent led only to an AWS Builder ID, which is not an account. No limited IAM user has been created yet (contract says no shared main logins). |
 | Cloudflare | Working | Zone melanotan-aus.com (Pro plan), logged in with her account. No invite to your own email yet. |
-| FluentCRM Pro | Zip checked | `fluentcampaign-pro-3.2.5.zip`, genuine plugin structure, no obfuscated or suspicious code in a basic scan, licensing code intact. License key received but **not yet activated**. |
-| Cloudways (cron) | Not received | Needed for the real server cron job. |
+| FluentCRM Pro | Installed | `fluentcampaign-pro-3.2.5.zip` was checked (genuine structure, no obfuscated code in a basic scan, licensing code intact). Site Health on 2026-10-16 shows **FluentCRM and FluentCRM Pro 3.2.6 already installed and active**, so the zip is no longer needed. License activation status not confirmed. |
+| Cloudways | Working | Server **Melanotan-Aus-Server** (id 1605291). Live app **Melanotan-Aus**, app id **6305766** (https://unified.cloudways.com/apps/6305766). Application folder `psukegvwxg`. Do not touch the other apps (Staging-Melanotan-Aus, verify, Cutthatfat, Tanmeofficial, LeanXSystem). A backup was taken before changes. |
 
 ---
 
@@ -75,6 +75,20 @@ Existing records worth knowing: root DMARC is `p=reject` with a placeholder `rua
 - Custom fields: AOV, Country_Region, Last_Active, Name, Orders, Postal_Code, Region, Sign_Up, Total_Spend, Username.
 - Forms: Footer Mailing List (11 submissions), Form #4 (0). Opt-in tags: `optin_checkout`, `optin_account`, `optin_thankyou`, `optin_package_qr`, `Newsletter`.
 
+### Cloudways cron (added 2026-10-16)
+- Cron Job Management on app 6305766: a new job **Type PHP, command `wp-cron.php`, schedule `*/5 * * * *`** was added (the form adds the `/psukegvwxg/public_html/` prefix itself; do not paste a full `php /home/...` command).
+- Real path on this server: `/home/1605291.cloudwaysapps.com/psukegvwxg/public_html`.
+- **`DISABLE_WP_CRON` has NOT been added yet.** Add it to `wp-config.php` (before `/* That's all, stop editing! */`) only after the system cron is confirmed working, and download a copy of `wp-config.php` first.
+- WP Crontrol 1.22.0 is already installed and active (Tools > Cron Events).
+
+### Site Health and cron findings (2026-10-16)
+- **WP-Cron had effectively stalled since about Sep 24**: many events were 1 to 3 weeks overdue (UpdraftPlus backups, Action Scheduler `run_queue`, WooCommerce order/email checks, Jetpack sync, WPLoyalty `wlr_expire_email` / `wlr_change_expire_status`, `sendEmail` OrderProcessor, `active_cron_to_check_order_and_send_email`). The system cron was only about 4 minutes old when checked, so the backlog had not cleared yet.
+- **Risk:** when cron recovers, overdue customer-facing tasks may fire together (loyalty/order emails through WP Mail SMTP). Before relying on it, check WooCommerce > Status > Scheduled Actions > Pending and tell the client.
+- WP Crontrol filters showed 287 events, **205 "paused"**, 215 "duplicated", 9 "no action". Paused hooks never run even with a real cron. Still to check: which hooks are paused, and that FluentCRM's own scheduled hooks (search `fluentcrm`) exist and are not paused. Do not resume or delete anything yet.
+- Plugins: **WP Mail SMTP 4.10.2 is active** (currently sends the store's email; mailer config not yet viewed). **FluentSMTP 2.4.1 is installed but inactive** (keep inactive until SES leaves sandbox; never run two SMTP plugins at once). Also active: Drip for WooCommerce, Klaviyo, Fluent Forms, Hustle, FlyingPress, UpdraftPlus, Simple CAPTCHA with Cloudflare Turnstile. Three marketing connections (Drip, Klaviyo, FluentCRM) risk duplicate tracking/emails; confirm FluentCRM has no automation or campaign switched on.
+- Other findings for the client (outside scope): 1 critical (autoloaded options about 874 KB), PHP 8.2.34 (8.3 recommended), 13 inactive plugins, about 10 pending plugin updates, outdated WooCommerce template overrides, opcode cache full, **13,099 WordPress users**, UpdraftPlus backups possibly not running on schedule.
+- **Security:** the Site Health "Info" tab includes a Jetpack blog token. Do not paste the Info tab into chats or notes; share only the Status tab. The client may want to reconnect Jetpack.
+
 ### WordPress site (seen only on the dashboard)
 Plugins include WooCommerce, Jetpack, Site Kit, WPForms, Contact Form 7, Yoast, WebToffee Import/Export, Shipment Tracking, Product Bundles, FlyingPress (cache), UpdraftPlus (backup), custom "Melanotan Aus" theme plugins. About 10 plugin updates are pending (do not update as part of this job).
 
@@ -86,8 +100,8 @@ Plugins include WooCommerce, Jetpack, Site Kit, WPForms, Contact Form 7, Yoast, 
 2. Click her SES email verification link (ask her), then **do not** make FluentSMTP the live mailer until SES leaves sandbox (otherwise WooCommerce order emails fail).
 3. Create the limited IAM users in her AWS account: one for you (`AmazonSESFullAccess` only) and one for FluentSMTP sending (send permissions only, plus an access key). Stop using the owner login.
 4. **Full site backup** (UpdraftPlus, download a copy) before installing anything.
-5. Install FluentCRM (free) -> FluentCRM Pro (upload zip, activate license in FluentCRM > Settings > License) -> FluentSMTP.
-6. Server cron: add a real cron on Cloudways and set `DISABLE_WP_CRON` in `wp-config.php`; check FlyingPress exclusions for FluentCRM pages and REST routes.
+5. FluentCRM, FluentCRM Pro (3.2.6) and FluentSMTP are already installed. Remaining: confirm the Pro license is activated (FluentCRM > Settings > License), finish FluentCRM setup without enabling any sending, and keep FluentSMTP inactive. View WP Mail SMTP's current mailer (view only) and plan the switch (deactivate WP Mail SMTP, activate FluentSMTP) only after SES production access.
+6. Server cron: the Cloudways system cron is DONE (see section 2). Remaining: confirm in WP Crontrol that overdue events clear, check Paused events and the WooCommerce pending Scheduled Actions backlog, then add `DISABLE_WP_CRON` to `wp-config.php`; check FlyingPress exclusions for FluentCRM pages and REST routes.
 7. Connect WooCommerce to FluentCRM; use double opt-in and CAPTCHA/honeypot on the new signup forms (bot signups).
 8. Export from Drip: Subscribed people CSV **and** Unsubscribed (and never-subscribed) people CSV. Import unsubscribed people into FluentCRM with status Unsubscribed so they stay blocked. Map tags and custom fields.
 9. Verify addresses with an email-verification service before the first send (typos like `hotmail.cpm` exist). The client pays for this. SES Auto Validation is off.
